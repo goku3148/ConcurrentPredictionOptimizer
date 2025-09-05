@@ -1,8 +1,4 @@
-Neural Session Memory: Concurrent Prediction Optimization
-[
-[
-[
-[
+##Neural Session Memory: Concurrent Prediction Optimization
 
 A novel approach to real-time language model adaptation through concurrent prediction optimization and reversible neural session memory.
 
