@@ -11,8 +11,7 @@ class ConcurrentPredictionOptimizer:
 
         self.num_target_layers = num_target_layers
         self.base_layers = torch.nn.ModuleList(self.transformer_model.layers[28-num_target_layers:])
-        self.leap_steps = leap_steps
-        
+        self.leap_steps = leap_steps    
 
         self.embedding = self.transformer_model.embed_tokens
         self.rotary_emb = self.transformer_model.rotary_emb
@@ -28,8 +27,7 @@ class ConcurrentPredictionOptimizer:
         for name, param in self.base_layers.named_parameters():
             self.session_start_weights[name] = param.clone().detach()
             self.session_start_weights[name].requires_grad_(False)
-
-            
+ 
             self.session_delta_weights[name] = torch.zeros_like(param)
         
         self.optimizer = optim.SGD(self.base_layers.parameters(), lr=learning_rate, momentum=0)
@@ -148,3 +146,4 @@ class ConcurrentPredictionOptimizer:
         with torch.no_grad():
             for name, param in self.base_layers.named_parameters():
                 param.data.copy_(self.session_start_weights[name])
+
